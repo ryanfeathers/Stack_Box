@@ -1,5 +1,5 @@
 # Stack_Box
-ImageJ plugin for cropping multichannel z-stacks at user specified points to a specified box size. Boxed images are saved individually with the channel,z frame, and coordinates appended to the filename.
+ImageJ plugin for cropping multichannel z-stacks at user specified points to a specific box size. Boxed images are saved individually with the channel,z frame, and coordinates appended to the filename. Useful for creating cropped images of individual cells from confocal fluorescence microscopy images. 
 
 Copy the JAR file to the plugins directory in ImageJ/FIJI. Tested with version 2.9.0/1.53t
 
