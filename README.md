@@ -9,3 +9,14 @@ Copy the JAR file to the plugins directory in ImageJ/FIJI. Tested with version 2
 4) Boxed images for each frame and channel will be saved in the folder where the original file is located
 
 Note: Adjust or normalize brightness and contrast before cropping.
+
+
+![alt text](https://github.com/ryanfeathers/Stack_Box/blob/main/Stackboxpluginmenu.png?raw=true)
+
+
+![alt text](https://github.com/ryanfeathers/Stack_Box/blob/main/stackbox_output2.png?raw=true)
+
+
+![alt text](https://github.com/ryanfeathers/Stack_Box/blob/main/stackbox_output1.png?raw=true)
+
+
