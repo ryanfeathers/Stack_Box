@@ -8,8 +8,7 @@ Copy the JAR file to the plugins directory in ImageJ/FIJI. Tested with version 2
 3) Run the Stack_Box plugin and provide a box size when prompted
 4) Boxed images for each frame and channel will be saved in the folder where the original file is located
 
-Note: Adjust or normalize brightness and contrast before cropping.
-
+Note: Adjusting or normalizing brightness and contrast and clicking "Apply" crops the intensity range. The current version saves raw files without information loss. When opening the cropped images in ImageJ/FIJI you will need to specify the bit depth and the image size (specfied box size). The bit depth can be found in the original image header.
 
 ![alt text](https://github.com/ryanfeathers/Stack_Box/blob/main/Stackboxpluginmenu.png?raw=true)
 
