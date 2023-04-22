@@ -1,11 +1,13 @@
-import ij.*;
-import ij.gui.*;
-import ij.plugin.*;
-import ij.process.*;
-import ij.io.*;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.WindowManager;
+import ij.gui.GenericDialog;
+import ij.gui.Roi;
+import ij.plugin.PlugIn;
 import ij.plugin.frame.RoiManager;
+import ij.gui.PointRoi;
+import ij.io.FileSaver;
 import java.awt.*;
-import java.util.*;
 
 public class Stack_box implements PlugIn {
     private ImagePlus img;
@@ -66,12 +68,11 @@ public class Stack_box implements PlugIn {
     }
 
     private String generateOutputFileName(String originalFileName, Point point, int channel, int slice) {
-        return originalFileName + "_x" + point.x + "_y" + point.y + "_c" + channel + "_z" + slice + ".raw";
+        return originalFileName + "_x" + point.x + "_y" + point.y + "_c" + channel + "_z" + slice + ".tif";
     }
 
     private void saveCroppedImage(ImagePlus croppedImage, String outputFileName) {
         FileSaver fileSaver = new FileSaver(croppedImage);
-        String outputPath = IJ.getDirectory("image") + outputFileName;
-        fileSaver.saveAsRaw(outputPath);
+        fileSaver.saveAsTiff(IJ.getDirectory("image") + outputFileName);
     }
 }
