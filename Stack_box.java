@@ -8,6 +8,9 @@ import ij.plugin.frame.RoiManager;
 import ij.gui.PointRoi;
 import ij.io.FileSaver;
 import java.awt.*;
+import java.io.File;
+import ij.plugin.tool.PlugInTool;
+import ij.gui.PointRoi;
 
 public class Stack_box implements PlugIn {
     private ImagePlus img;
@@ -21,13 +24,21 @@ public class Stack_box implements PlugIn {
         }
 
         RoiManager roiManager = RoiManager.getInstance();
-        if (roiManager == null || roiManager.getCount() == 0) {
+        if (roiManager == null) {
+            roiManager = new RoiManager();
+        }
+
+        Roi roi = img.getRoi();
+        if (roi != null && roi.getType() == Roi.POINT) {
+            PointRoi pointRoi = (PointRoi) roi;
+            roiManager.addRoi(pointRoi);
+        } else {
             IJ.error("No points selected. Please use the Multi-point tool to select points.");
             return;
         }
 
         GenericDialog gd = new GenericDialog("Box Size");
-        gd.addNumericField("Enter box size:", 50, 0); // default box size: 50
+        gd.addNumericField("Enter box size:", 200, 0); // default box size: 50
         gd.showDialog();
         if (gd.wasCanceled()) {
             return;
@@ -36,6 +47,8 @@ public class Stack_box implements PlugIn {
         boxSize = (int) gd.getNextNumber();
         processImage(roiManager);
     }
+
+
 
     private void processImage(RoiManager roiManager) {
         int numSlices = img.getNSlices();
@@ -68,11 +81,22 @@ public class Stack_box implements PlugIn {
     }
 
     private String generateOutputFileName(String originalFileName, Point point, int channel, int slice) {
-        return originalFileName + "_x" + point.x + "_y" + point.y + "_c" + channel + "_z" + slice + ".tif";
+        String fileNameWithoutExtension = originalFileName.lastIndexOf(".") > 0
+                ? originalFileName.substring(0, originalFileName.lastIndexOf("."))
+                : originalFileName;
+        return fileNameWithoutExtension + "_x" + point.x + "_y" + point.y + "_c" + channel + "_z" + slice + ".tif";
     }
 
     private void saveCroppedImage(ImagePlus croppedImage, String outputFileName) {
+        String outputDirectoryPath = IJ.getDirectory("image") + "Cropped_Images" + File.separator;
+        File outputDirectory = new File(outputDirectoryPath);
+        if (!outputDirectory.exists()) {
+            outputDirectory.mkdir();
+        }
+
         FileSaver fileSaver = new FileSaver(croppedImage);
-        fileSaver.saveAsTiff(IJ.getDirectory("image") + outputFileName);
+        fileSaver.saveAsTiff(outputDirectoryPath + outputFileName);
     }
+
 }
+
